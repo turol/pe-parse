@@ -2537,12 +2537,8 @@ parsed_pe *ParsePEFromBuffer(bounded_buffer *buffer) {
     return nullptr;
   }
 
-  if (!getDebugDir(p)) {
-    deleteBuffer(remaining);
-    DestructParsedPE(p);
-    PE_ERR(PEERR_MAGIC);
-    return nullptr;
-  }
+  // allowed to fail
+  getDebugDir(p);
 
   // Get imports
   if (!getImports(p)) {
